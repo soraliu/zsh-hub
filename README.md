@@ -1,2 +1,44 @@
-# zsh-hub-plugin
+# zsh-hub
+
 Github hub zsh plugin
+
+# Usage
+
+## `grebase` (rebase)
+
+Find the ancestor, and squash commit.
+
+```bash
+git fetch origin # upstream
+grebase
+```
+
+## `gpr` (pull request)
+
+Push to forked repo, and create a pull request.
+
+```bash
+gpr
+# show the pr in browser
+gpr -s
+```
+
+## `gct` (comment)
+
+Comment the pr based on current branch
+
+```bash
+gct "/publish"
+
+# multiple lines
+gct '/publish
+/hold'
+```
+
+## `gci` (ci-status)
+
+Check the ci status of current pr
+
+```bash
+gci
+```
