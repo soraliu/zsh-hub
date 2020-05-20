@@ -44,7 +44,7 @@ gpr -s
 Comment the pr based on current branch
 
 ```bash
-gct "/publish"
+gct '/publish'
 
 # multiple lines
 gct '/publish
