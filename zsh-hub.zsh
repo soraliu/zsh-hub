@@ -33,7 +33,7 @@ gct() {
   comment=$1
 
   account_name=$(hub api -t user | grep .login | cut -f 2)
-  repo_name=$(basename $(hub remote get-url origin))
+  repo_name=$(basename $(hub remote get-url origin) | cut -d '.' -f 1)
 
   parent_full_name=$(hub api -t repos/${account_name}/${repo_name} | grep .parent.full_name | cut -f 2)
 
