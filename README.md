@@ -2,6 +2,22 @@
 
 Github hub zsh plugin
 
+# Installation
+
+```bash
+git clone https://github.com/soraliu/zsh-hub.git $ZSH_CUSTOM/plugins/zsh-hub
+```
+
+```bash
+# ~/.zshrc
+
+plugins=(
+  # ...
+  zsh-hub
+  # ...
+)
+```
+
 # Usage
 
 ## `grebase` (rebase)
