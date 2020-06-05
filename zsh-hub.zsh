@@ -13,16 +13,20 @@ gpr() {
       -s )
         show="true"
         ;;
+      -b | --base ) shift
+        base=$1
+        ;;
       * )
         echo "usage: create hub pull request
-          [-s [show pr]]"
+          [-s [show pr]]
+          [-b | --base [base branch]]"
         exit 1
     esac
     shift
   done
 
   account_name=$(hub api user -t | grep .login | cut -f 2)
-  hub push ${account_name} -u -f && hub pull-request --no-edit
+  hub push ${account_name} -u -f && hub pull-request --no-edit -b ${base:-master}
 
   if [[ $show == "true" ]]; then
     hub pr show

@@ -2,6 +2,10 @@
 
 Github hub zsh plugin
 
+# Prerequisites
+
+- [hub](https://github.com/github/hub)
+
 # Installation
 
 ```bash
