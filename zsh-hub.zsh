@@ -26,6 +26,7 @@ gpr() {
   done
 
   account_name=$(hub api user -t | grep .login | cut -f 2)
+  echo "Base branch: ${base:-master}"
   hub push ${account_name} -u -f && hub pull-request --no-edit -b ${base:-master}
 
   if [[ $show == "true" ]]; then
