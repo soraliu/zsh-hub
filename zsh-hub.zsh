@@ -32,6 +32,8 @@ gpr() {
   if [[ $show == "true" ]]; then
     hub pr show
   fi
+
+  show=
 }
 
 gct() {
