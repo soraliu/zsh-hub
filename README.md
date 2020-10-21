@@ -33,6 +33,17 @@ git fetch origin # upstream
 grebase
 ```
 
+## `gupdate` (update issue)
+
+Push to forked repo, and create a pull request.
+
+```bash
+# add label
+gupdate -l lgtm
+# asign to a user
+gupdate -a username
+```
+
 ## `gpr` (pull request)
 
 Push to forked repo, and create a pull request.

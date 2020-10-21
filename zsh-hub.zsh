@@ -7,6 +7,21 @@ grebase() {
   hub rebase -i HEAD~$(hub rev-list ...$(hub merge-base HEAD ${base}) | wc -l | bc)
 }
 
+gupdate() {
+  set -e
+
+  pr_number=$(hub pr show -u | grep -o '\d\+$' 2>/dev/null)
+
+  if [[ ${pr_number} == "" ]]; then
+    echo 'PR not exist!'
+    exit
+  fi
+
+  labels=$(git issue show ${pr_number} -f '%L' | sed 's/ //g')
+
+  hub issue update ${pr_number} -l "${labels}" ${@}
+}
+
 gpr() {
   while [ "$1" != "" ]; do
     case $1 in
