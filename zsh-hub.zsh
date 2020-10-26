@@ -20,6 +20,8 @@ gupdate() {
   labels=$(git issue show ${pr_number} -f '%L' | sed 's/ //g')
 
   hub issue update ${pr_number} -l "${labels}" ${@}
+
+  echo "update successfully"
 }
 
 gpr() {
