@@ -24,6 +24,10 @@ gupdate() {
   echo "update successfully"
 }
 
+glspr() {
+  hub pr list -f '%i_%au_%t%n' | column -t -s '_'
+}
+
 gpr() {
   while [ "$1" != "" ]; do
     case $1 in
@@ -62,7 +66,11 @@ gct() {
   parent_full_name=$(hub api -t repos/${account_name}/${repo_name} | grep .parent.full_name | cut -f 2)
 
   curr_branch=$(hub branch --show-current 2>/dev/null || git rev-parse --abbrev-ref HEAD)
-  pr_number=$(hub pr list -h ${account_name}:${curr_branch} | grep -o -E '^\s*#\w+' | cut -d '#' -f 2)
+
+  pr_number=$2
+  if [[ ${pr_number} == "" ]]; then
+    pr_number=$(hub pr list -h ${account_name}:${curr_branch} | grep -o -E '^\s*#\w+' | cut -d '#' -f 2)
+  fi
 
   hub api -t repos/${parent_full_name}/issues/${pr_number}/comments --raw-field "body=${comment}" | grep '.html_url' | head -n 1
 }
