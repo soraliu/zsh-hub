@@ -24,7 +24,24 @@ gupdate() {
   echo "update successfully"
 }
 
-glspr() {
+gprstat() {
+  UPSTREAM=origin
+  BASE=master
+  BASE_BRANCH=${UPSTREAM}/${BASE}
+
+  pr_number=$1
+
+  git fetch ${UPSTREAM} ${BASE}
+  if [[ ${pr_number} == "" ]]; then
+    git log --stat ...${BASE_BRANCH}
+  else
+    git fetch ${UPSTREAM} pull/${pr_number}/head
+    ancestor_branch=$(git merge-base FETCH_HEAD ${BASE_BRANCH})
+    git log --stat FETCH_HEAD...${ancestor_branch}
+  fi
+}
+
+gprls() {
   hub pr list -f '%i_%au_%t%n' | column -t -s '_'
 }
 
