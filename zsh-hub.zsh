@@ -1,6 +1,7 @@
 0=${(%):-%N}
 typeset -g ZSH_HUB_VERSION=$(<"${0:A:h}"/.version)
 typeset -g ZSH_HUB_REVISION=$(<"${0:A:h}"/.revision-hash)
+typeset -g ZSH_HUB_CACHE_DIR=~/.zsh-hub
 
 grebase() {
   base=${1:-origin/master}
@@ -42,7 +43,33 @@ gprstat() {
 }
 
 gprls() {
-  hub pr list -f '%i_%au_%t%n' | column -t -s '_'
+  refresh=
+  while [ "$1" != "" ]; do
+    case $1 in
+      -r )
+        refresh="true"
+        ;;
+      * )
+        echo "usage: gprls
+          [-r [refresh cache]]"
+        exit 1
+    esac
+    shift
+  done
+
+  mkdir -p ${ZSH_HUB_CACHE_DIR}
+
+  repo_name=$(basename $(hub remote get-url origin) | cut -d '.' -f 1)
+  path_to_cache=${ZSH_HUB_CACHE_DIR}/${repo_name}
+
+  if [[ -e ${path_to_cache} && ${refresh} == "" ]]; then
+    cat ${path_to_cache}
+    bash -c "hub pr list -f '%i_%au_%t%n' | column -t -s '_' > ${path_to_cache}" &
+  else
+    cached_data=$(hub pr list -f '%i_%au_%t%n' | column -t -s '_')
+    echo ${cached_data}
+    echo ${cached_data} > ${path_to_cache}
+  fi
 }
 
 gpr() {
