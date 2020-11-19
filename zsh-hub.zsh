@@ -8,6 +8,10 @@ grebase() {
   hub rebase -i HEAD~$(hub rev-list ...$(hub merge-base HEAD ${base}) | wc -l | bc)
 }
 
+gbsort() {
+  git for-each-ref --sort=-committerdate refs/heads
+}
+
 gupdate() {
   set -e
 
