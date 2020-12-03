@@ -77,6 +77,8 @@ gprls() {
 }
 
 gpr() {
+  show="false"
+  base="master"
   while [ "$1" != "" ]; do
     case $1 in
       -s )
@@ -101,8 +103,6 @@ gpr() {
   if [[ $show == "true" ]]; then
     hub pr show
   fi
-
-  show=
 }
 
 gct() {
