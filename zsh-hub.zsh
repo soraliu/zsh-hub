@@ -68,7 +68,7 @@ gprls() {
 
   if [[ -e ${path_to_cache} && ${refresh} == "" ]]; then
     cat ${path_to_cache}
-    bash -c "hub pr list -f '%i_%au_%t%n' | column -t -s '_' > ${path_to_cache}" &
+    bash -c "hub pr list -f '%i_%au_%t%n' | column -t -s '_' > ${path_to_cache} &"
   else
     cached_data=$(hub pr list -f '%i_%au_%t%n' | column -t -s '_')
     echo ${cached_data}
