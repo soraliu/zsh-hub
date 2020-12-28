@@ -19,7 +19,7 @@ gupdate() {
 
   if [[ ${pr_number} == "" ]]; then
     echo 'PR not exist!'
-    exit
+    return
   fi
 
   labels=$(git issue show ${pr_number} -f '%L' | sed 's/ //g')
@@ -56,7 +56,7 @@ gprls() {
       * )
         echo "usage: gprls
           [-r [refresh cache]]"
-        exit 1
+        return 1
     esac
     shift
   done
@@ -91,7 +91,7 @@ gpr() {
         echo "usage: create hub pull request
           [-s [show pr]]
           [-b | --base [base branch]]"
-        exit 1
+        return 1
     esac
     shift
   done
