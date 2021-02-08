@@ -96,9 +96,11 @@ gpr() {
     shift
   done
 
-  account_name=$(hub api user -t | grep .login | cut -f 2)
   echo "Base branch: ${base:-master}"
-  hub push ${account_name} -u -f && hub pull-request --no-edit -b ${base:-master}
+
+  account_name=$(hub api user -t | grep .login | cut -f 2)
+  title=$(git log -n1 --pretty='%s')
+  hub push ${account_name} -u -f && hub pull-request --no-edit -b ${base:-master} -m "${title}"
 
   if [[ $show == "true" ]]; then
     hub pr show
