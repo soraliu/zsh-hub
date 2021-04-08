@@ -15,18 +15,46 @@ gbsort() {
 gupdate() {
   set -e
 
-  pr_number=$(hub pr show -u | grep -o '\d\+$' 2>/dev/null)
+  usage() {
+    echo "usage:
+      [-l label]
+      [-n number]
+      [-h]"
+  }
+
+  while [ "$1" != "" ]; do
+    case $1 in
+      -l ) shift
+        lables=$1
+        ;;
+      -n ) shift
+        pr_number=$1
+        ;;
+      -h | --help )
+        usage
+        exit
+        ;;
+      * )
+        usage
+        exit 1
+    esac
+    shift
+  done
+
+  if [[ ${pr_number} == "" ]]; then
+    pr_number=$(hub pr show -u | grep -o '\d\+$' 2>/dev/null)
+  fi
 
   if [[ ${pr_number} == "" ]]; then
     echo 'PR not exist!'
     return
   fi
 
-  labels=$(git issue show ${pr_number} -f '%L' | sed 's/ //g')
+  labels=$(hub issue show ${pr_number} -f '%L' | sed 's/ //g')
 
-  hub issue update ${pr_number} -l "${labels}" ${@}
+  hub issue update ${pr_number} -l "${labels}" -l "${lables}"
 
-  echo "update successfully"
+  echo "pr: ${pr_number} update successfully"
 }
 
 gprstat() {
