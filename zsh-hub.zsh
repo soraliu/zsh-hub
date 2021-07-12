@@ -104,6 +104,7 @@ gprls() {
   fi
 }
 
+unalias gpr
 gpr() {
   show="false"
   base="master"
